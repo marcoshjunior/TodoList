@@ -1,4 +1,6 @@
 import { useState } from "react";
+import Todo from "./components/Todo";
+import TodoForm from "./components/TodoForm";
 import "./App.css";
 
 function App() {
@@ -23,24 +25,18 @@ function App() {
       isCompleted: false,
     },
   ]);
+
   return (
     <div className="app">
       <h1>Lista de Tarefas</h1>
-      {/*percorre e exibe cada array-tarefa */}
       <div className="todo-list">
+        {/*percorre e exibe cada array-tarefa
+         de acordo com o componente Todo*/}
         {todos.map((todo) => (
-          <div className="todo">
-            <div className="content">
-              <p>{todo.text}</p>
-              <p className="category">({todo.category})</p>
-            </div>
-            <div>
-              <button>Completar</button>
-              <button>X</button>
-            </div>
-          </div>
+          <Todo todo={todo} />
         ))}
       </div>
+      <TodoForm />
     </div>
   );
 }
