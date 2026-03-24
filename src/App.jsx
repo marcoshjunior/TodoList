@@ -2,10 +2,45 @@ import { useState } from "react";
 import "./App.css";
 
 function App() {
+  // Armazenando os dados iniciais das tarefas
+  const [todos, setTodos] = useState([
+    {
+      id: 1,
+      text: "criar funcionalidade x no sistema",
+      category: "Trabalho",
+      isCompleted: false,
+    },
+    {
+      id: 2,
+      text: "Ir pra academia",
+      category: "Pessoal",
+      isCompleted: false,
+    },
+    {
+      id: 3,
+      text: "Estudar React",
+      category: "Estudos",
+      isCompleted: false,
+    },
+  ]);
   return (
-    <div>
-      <h1>Olá React</h1>
-      <h2>Projeto de Lista de Tarefas</h2>
+    <div className="app">
+      <h1>Lista de Tarefas</h1>
+      {/*percorre e exibe cada array-tarefa */}
+      <div className="todo-list">
+        {todos.map((todo) => (
+          <div className="todo">
+            <div className="content">
+              <p>{todo.text}</p>
+              <p className="category">({todo.category})</p>
+            </div>
+            <div>
+              <button>Completar</button>
+              <button>X</button>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
