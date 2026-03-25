@@ -26,17 +26,36 @@ function App() {
     },
   ]);
 
+  // pega o titulo e a categoria do TodoForm
+  const addTodo = (text, category) => {
+    const newTodos = [
+      ...todos,
+      {
+        id: Math.floor(Math.random() * 10000),
+        text,
+        category,
+        isCompleted: false,
+      },
+    ];
+    {
+      /* adiciona a tarefa a lista de todos */
+    }
+    setTodos(newTodos);
+  };
+
   return (
     <div className="app">
       <h1>Lista de Tarefas</h1>
       <div className="todo-list">
         {/*percorre e exibe cada array-tarefa
-         de acordo com o componente Todo*/}
+         de acordo com o componente Todo
+         com o text e o category*/}
         {todos.map((todo) => (
-          <Todo todo={todo} />
+          <Todo key={todo.id} todo={todo} />
         ))}
       </div>
-      <TodoForm />
+      {/*criação de tarefa*/}
+      <TodoForm addTodo={addTodo} />
     </div>
   );
 }
