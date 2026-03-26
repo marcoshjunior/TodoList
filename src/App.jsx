@@ -43,6 +43,15 @@ function App() {
     setTodos(newTodos);
   };
 
+  // remover um Todo
+  const removeTodo = (id) => {
+    const newTodos = [...todos];
+    const filteredTodos = newTodos.filter((todo) =>
+      todo.id !== id ? todo : null,
+    );
+    setTodos(filteredTodos);
+  };
+
   return (
     <div className="app">
       <h1>Lista de Tarefas</h1>
@@ -51,7 +60,7 @@ function App() {
          de acordo com o componente Todo
          com o text e o category*/}
         {todos.map((todo) => (
-          <Todo key={todo.id} todo={todo} />
+          <Todo key={todo.id} todo={todo} removeTodo={removeTodo} />
         ))}
       </div>
       {/*criação de tarefa*/}
