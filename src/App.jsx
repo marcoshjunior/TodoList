@@ -2,6 +2,7 @@ import { useState } from "react";
 import Todo from "./components/Todo";
 import TodoForm from "./components/TodoForm";
 import Search from "./components/Search";
+import Filter from "./components/Filter";
 import "./App.css";
 
 function App() {
@@ -28,6 +29,9 @@ function App() {
   ]);
 
   const [search, setSearch] = useState("");
+
+  const [filter, setFilter] = useState("All");
+  const [sort, setSort] = useState("Asc");
 
   // pega o titulo e a categoria do TodoForm
   const addTodo = (text, category) => {
@@ -68,13 +72,21 @@ function App() {
     <div className="app">
       <h1>Lista de Tarefas</h1>
       <Search search={search} setSearch={setSearch} />
+      <Filter filter={filter} setFilter={setFilter} />
       <div className="todo-list">
         {/*percorre e exibe cada array-tarefa
          de acordo com o componente Todo
          com o text e o category*/}
-        {/* filter compara o search com o text do todo
-         e filtra oque corresponde */}
         {todos
+          // Filtra os status por completo ou não completo
+          .filter((todo) =>
+            filter === "All"
+              ? true
+              : filter === "Completed"
+                ? todo.isCompleted
+                : !todo.isCompleted,
+          )
+          // filter compara o search com o text do todo e filtra oque corresponde
           .filter((todo) =>
             todo.text.toLowerCase().includes(search.toLowerCase()),
           )
