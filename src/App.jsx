@@ -10,7 +10,7 @@ function App() {
   const [todos, setTodos] = useState([
     {
       id: 1,
-      text: "criar funcionalidade x no sistema",
+      text: "Criar funcionalidade x no sistema",
       category: "Trabalho",
       isCompleted: false,
     },
@@ -29,7 +29,6 @@ function App() {
   ]);
 
   const [search, setSearch] = useState("");
-
   const [filter, setFilter] = useState("All");
   const [sort, setSort] = useState("Asc");
 
@@ -72,7 +71,7 @@ function App() {
     <div className="app">
       <h1>Lista de Tarefas</h1>
       <Search search={search} setSearch={setSearch} />
-      <Filter filter={filter} setFilter={setFilter} />
+      <Filter filter={filter} setFilter={setFilter} setSort={setSort} />
       <div className="todo-list">
         {/*percorre e exibe cada array-tarefa
          de acordo com o componente Todo
@@ -90,12 +89,18 @@ function App() {
           .filter((todo) =>
             todo.text.toLowerCase().includes(search.toLowerCase()),
           )
+          // ordena os itens em asc e desc
+          .sort((a, b) =>
+            sort === "Asc"
+              ? a.text.localeCompare(b.text)
+              : b.text.localeCompare(a.text),
+          )
           .map((todo) => (
             <Todo
               key={todo.id}
               todo={todo}
-              removeTodo={removeTodo}
               completeTodo={completeTodo}
+              removeTodo={removeTodo}
             />
           ))}
       </div>
