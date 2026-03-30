@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Todo from "./components/Todo";
 import TodoForm from "./components/TodoForm";
 import Search from "./components/Search";
@@ -7,26 +7,30 @@ import "./App.css";
 
 function App() {
   // Armazenando os dados iniciais das tarefas
-  const [todos, setTodos] = useState([
-    {
-      id: 1,
-      text: "Criar funcionalidade x no sistema",
-      category: "Trabalho",
-      isCompleted: false,
-    },
-    {
-      id: 2,
-      text: "Ir pra academia",
-      category: "Pessoal",
-      isCompleted: false,
-    },
-    {
-      id: 3,
-      text: "Estudar React",
-      category: "Estudos",
-      isCompleted: false,
-    },
-  ]);
+  // Aqui uma função dentro do useState
+  // Isso faz com que o localStorage seja lido,
+  // só uma vez quando o app carrega
+  const [todos, setTodos] = useState(() => {
+    // tenta pegar dados salvos no navegador
+    const savedTodos = localStorage.getItem("todos");
+    // se existir algo salvo, converte de JSON pra array
+    // se não existir nada, usa os dados padrão
+    return savedTodos
+      ? JSON.parse(savedTodos)
+      : [
+          {
+            id: 1,
+            text: "Criar funcionalidade x no sistema",
+            category: "Trabalho",
+            isCompleted: false,
+          },
+        ];
+  });
+  // Sempre que a lista de tarefas mudar...
+  useEffect(() => {
+    // salva no localStorage como string (JSON)
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]); // executa sempre que "todos" mudar
 
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("All");
@@ -45,6 +49,7 @@ function App() {
     ];
     {
       /* adiciona a tarefa a lista de todos */
+      /* isso automaticamente vai salvar no localStorage */
     }
     setTodos(newTodos);
   };
@@ -55,6 +60,7 @@ function App() {
     const filteredTodos = newTodos.filter((todo) =>
       todo.id !== id ? todo : null,
     );
+    // também salva automaticamente
     setTodos(filteredTodos);
   };
 
@@ -64,6 +70,7 @@ function App() {
     newTodos.map((todo) =>
       todo.id === id ? (todo.isCompleted = !todo.isCompleted) : todo,
     );
+    // também salva automaticamente
     setTodos(newTodos);
   };
 
