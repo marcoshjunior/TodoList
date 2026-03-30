@@ -74,6 +74,18 @@ function App() {
     setTodos(newTodos);
   };
 
+  // editar uma tarefa existente
+  const editTodo = (id, newText, newCategory) => {
+    // percorre as tarefas
+    const newTodos = todos.map((todo) =>
+      // se tiver o msm id,
+      // cria um novo objeto atualizando só os editados
+      // caso não, mantém a tarefa original
+      todo.id === id ? { ...todo, text: newText, category: newCategory } : todo,
+    );
+    setTodos(newTodos);
+  };
+
   return (
     <div className="app">
       <h1>Lista de Tarefas</h1>
@@ -108,6 +120,7 @@ function App() {
               todo={todo}
               completeTodo={completeTodo}
               removeTodo={removeTodo}
+              editTodo={editTodo}
             />
           ))}
       </div>
