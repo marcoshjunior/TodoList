@@ -18,6 +18,9 @@ const Todo = ({ todo, removeTodo, completeTodo, editTodo }) => {
     setIsEditing(false);
   };
 
+  /*className="todo"
+      style={{ textDecoration: todo.isCompleted ? "line-through" : "" }}*/
+
   return (
     <div
       className="todo"
